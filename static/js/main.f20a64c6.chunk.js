@@ -1,0 +1,2 @@
+(this["webpackJsonpre-store"]=this["webpackJsonpre-store"]||[]).push([[0],{10:function(e,t,n){"use strict";n.r(t);n(0);var r=n(3),s=n.n(r),c=(n(8),n(1)),o=function(){return Object(c.jsx)("div",{children:"App"})};s.a.render(Object(c.jsx)(o,{}),document.getElementById("root"))},8:function(e,t,n){}},[[10,1,2]]]);
+//# sourceMappingURL=main.f20a64c6.chunk.js.map
