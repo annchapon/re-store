@@ -8,6 +8,7 @@ const BookListItem = ({ book }) => {
   return (
     <Fragment>
       <span>{title}</span>
+      <br />
       <span>{author}</span>
     </Fragment>
   );
