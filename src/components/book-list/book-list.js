@@ -3,7 +3,7 @@ import BookListItem from '../book-list-item';
 import { connect } from 'react-redux';
 
 import { withBookstoreService } from '../hoc';
-import { booksLoaded, booksRequested, booksError } from '../../actions';
+import { fetchBooks } from '../../actions';
 import { compose } from '../../utils';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
@@ -74,7 +74,7 @@ const mapStateToProps = ({ books, loading, error }) => {
   booksError
 }; */
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+/* const mapDispatchToProps = (dispatch, ownProps) => {
   const { bookstoreService } = ownProps;
 
   return {
@@ -85,6 +85,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         .then((data) => dispatch(booksLoaded(data)))
         .catch((err) => dispatch(booksError(err)))
     }
+  };
+}; */
+
+const mapDispatchToProps = (dispatch, { bookstoreService }) => {
+  return {
+    fetchBooks: fetchBooks(bookstoreService, dispatch)
   };
 };
 
