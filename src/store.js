@@ -1,44 +1,41 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
 import reducer from './reducers';
 
-/* Store Enhancer
-const enhancer = (createStore) => (...args) => {
-  const store = createStore(...args);
-  const originalDispatch = store.dispatch;
-  store.dispatch = (action) => {
-    if (typeof action === 'string') {
-      return originalDispatch({
-        type: action
-      });
-    }
-    return originalDispatch(action);
-  };
-  return store;
+const logMiddleware = ({ getState }) => (next) => (action) => {
+  console.log(action.type, getState());
+  return next(action);
 };
-*/
 
-/* Middleware
-const logMiddleware = (store) = (dispathch) => (action) => {
-  console.log(action.type, store.getState());
-  return dispatch(action);
-};
-*/
-
-const store = createStore(reducer);
-
-/* Monkey patching
-const originalDispatch = store.dispatch;
-store.dispatch = (action) => {
+const stringMiddleware = () => (next) => (action) => {
   if (typeof action === 'string') {
-    return originalDispatch({
+    return next({
       type: action
     });
   }
-  return originalDispatch(action);
+
+  return next(action);
+};
+
+const store = createStore(reducer, applyMiddleware(
+  thunkMiddleware, stringMiddleware, logMiddleware));
+
+/*
+const myAction = (dispatch) => {
+  setTimeout(() => dispatch({
+    type: 'DELAYED_ACTION'
+  }), 2000)
 };
 */
 
-// store.dispatch('HELLO_WORLD');
+// actionCreator для Thunk
+const delayedActionCreator = (timeout) => (dispatch) => {
+  setTimeout(() => dispatch({
+    type: 'DELAYED_ACTION'
+  }), timeout)
+};
+
+store.dispatch(delayedActionCreator(3000));
 
 export default store;
